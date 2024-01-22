@@ -94,6 +94,7 @@ Detailed documentation: https://atlasgo.io/
 2. Add SQL to the migration file
 
     ```sql
+    -- ./migrations/<TIMESTAMP>.sql
     -- insert "users" data
     INSERT INTO
         users (id, full_name)
@@ -114,6 +115,28 @@ Detailed documentation: https://atlasgo.io/
 
     ```bash
     atlas migrate apply --env local
+    ```
+
+## Linting
+
+1. Remove column from `schema.sql`
+
+    ```sql
+    -- schema.sql
+    -- Create "users" table
+    CREATE TABLE "users" ("id" uuid NOT NULL, PRIMARY KEY ("id"));
+    ```
+
+2. Generate migration
+
+    ```bash
+    atlas migrate diff --env local
+    ```
+
+3. Lint. A destructive change should be detected
+
+    ```bash
+    atlas migrate lint --env local --latest 1
     ```
 
 ## Clean up
